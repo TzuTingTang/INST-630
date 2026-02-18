@@ -9,7 +9,7 @@
    =========================================== */
 
 /* External font - add your choice from Google Fonts, Inter will not be graded */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap');
 
 :root {
   /* Spacing scale */
@@ -20,16 +20,16 @@
   --spacing-xl: 2rem;
   
   /* Colors - customize these */
-  --color-bg: hsl(210, 20%, 98%);
+  --color-bg: hsl(210, 67%, 84%);
   --color-surface: hsl(0, 0%, 100%);
   --color-text: hsl(210, 10%, 20%);
   --color-text-muted: hsl(210, 10%, 50%);
   --color-accent: hsl(220, 80%, 50%);
-  --color-border: hsla(210, 10%, 20%, 0.1);
+  --color-border: hsla(355, 84%, 50%, 0.888);
   
   /* Typography */
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-display: 'Inter', system-ui, sans-serif; /* Change this */
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-display: 'Playfair Display', serif;/* Change this */
 }
 
 /* Reset */
@@ -42,7 +42,7 @@ body {
   font-family: var(--font-body);
   background: var(--color-bg);
   color: var(--color-text);
-  line-height: 1.6;
+  line-height: 1.0;
 }
 
 /* ===========================================
@@ -58,7 +58,7 @@ body {
 
 .page-layout {
   display: grid;
-  grid-template-columns: 1fr minmax(0, 70rem) 1fr;
+  grid-template-columns: 1fr minmax(0, 100%) 1fr;
   grid-template-rows: auto auto 1fr auto;
   grid-template-areas:
     ". header ."
@@ -125,28 +125,30 @@ body {
 
 /* Make list items flow horizontally on large screens */
 .list-section {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  
   /* YOUR CODE: display flex, gap, wrap behavior */
   display: flex;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
   flex-wrap: wrap;
   padding: 0;
+  align-items: flex-start;
+  justify-content: center;  
+  
 }
 
 .list-item {
   background: var(--color-surface);
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
   border-radius: 0.5rem;
   border: 1px solid var(--color-border);
   /* YOUR CODE: flex-basis or width for sizing */
   width: 471px;
-  height: 144px;
-  grid-template-columns: 96px 1fr;
+  max-height: 144px;
+  
   display: flex;
-  gap: var(--spacing-lg);
+  gap: 24px;
   align-items: center;
+  
 
 }
 
@@ -155,6 +157,24 @@ body {
   height: 96px;
   background: #bfbfbf;
   flex: 0 0 96px; 
+}
+
+.description{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header h2,
+.header p,
+.text{
+  margin: 0;
 }
 
 /* ===========================================
@@ -179,12 +199,14 @@ body {
   
   .list-section {
     /* YOUR CODE: change flex-direction if needed */
-    grid-template-columns: 1fr;
-  }
+    display: flex;           
+    flex-direction: column;  
+    align-items: center;  }
   
   .list-item {
     /* YOUR CODE: full width on mobile */
     width: 100%;
+    max-width: 471px; 
   }
 }
 
