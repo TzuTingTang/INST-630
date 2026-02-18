@@ -1,0 +1,210 @@
+/* ===========================================
+   TUTORIAL 3: CSS GRID LAYOUT
+   
+   Your tasks:
+   1. Define the page grid on .page-layout
+   2. Assign grid-area to each section
+   3. Make .list-section items flow with Flexbox
+   4. Add mobile breakpoint under 48rem
+   =========================================== */
+
+/* External font - add your choice from Google Fonts, Inter will not be graded */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+:root {
+  /* Spacing scale */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Colors - customize these */
+  --color-bg: hsl(210, 20%, 98%);
+  --color-surface: hsl(0, 0%, 100%);
+  --color-text: hsl(210, 10%, 20%);
+  --color-text-muted: hsl(210, 10%, 50%);
+  --color-accent: hsl(220, 80%, 50%);
+  --color-border: hsla(210, 10%, 20%, 0.1);
+  
+  /* Typography */
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif; /* Change this */
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* ===========================================
+   TASK 1: PAGE GRID STRUCTURE
+   
+   Define your grid here. You need:
+   - grid-template-areas for the layout map
+   - grid-template-columns for column widths
+   - grid-template-rows for row heights
+   - min-height: 100vh to fill the viewport
+   - gap for spacing between regions
+   =========================================== */
+
+.page-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 70rem) 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    ". header ."
+    ". hero ."
+    ". list ."
+    ". footer .";
+  min-height: 100vh;
+  gap: var(--spacing-md);
+}
+
+/* ===========================================
+   TASK 2: ASSIGN GRID AREAS
+   
+   Connect each section to its named area
+   =========================================== */
+
+.site-header {
+  /* YOUR CODE: grid-area */
+  grid-area: header;
+  background: var(--color-surface);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-section {
+  /* YOUR CODE: grid-area */
+  grid-area: hero;
+  padding: var(--spacing-xl);
+}
+
+.list-section {
+  /* YOUR CODE: grid-area */
+  grid-area: list;
+  padding: var(--spacing-lg);
+}
+
+.site-footer {
+  /* YOUR CODE: grid-area */
+  grid-area: footer;
+  background: var(--color-text);
+  color: var(--color-bg);
+  padding: var(--spacing-lg);
+  /* NOTE: Footer should not exceed main content width */
+}
+
+/* ===========================================
+   TASK 3: FLEXBOX FOR COMPONENTS
+   
+   Use Flexbox to arrange items WITHIN grid regions
+   =========================================== */
+
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--spacing-md);
+  list-style: none;
+  padding: 0;
+}
+
+/* Make list items flow horizontally on large screens */
+.list-section {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* YOUR CODE: display flex, gap, wrap behavior */
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  padding: 0;
+}
+
+.list-item {
+  background: var(--color-surface);
+  padding: var(--spacing-lg);
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  /* YOUR CODE: flex-basis or width for sizing */
+  width: 471px;
+  height: 144px;
+  grid-template-columns: 96px 1fr;
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: center;
+
+}
+
+.image {
+  width: 96px;
+  height: 96px;
+  background: #bfbfbf;
+  flex: 0 0 96px; 
+}
+
+/* ===========================================
+   TASK 4: RESPONSIVE BREAKPOINT
+   
+   Under 48rem:
+   - Stack all grid regions vertically
+   - List items should stack vertically too
+   =========================================== */
+
+@media (max-width: 48rem) {
+  .page-layout {
+    /* YOUR CODE: redefine grid-template-areas */
+    /* YOUR CODE: single column layout */
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "hero"
+      "list"
+      "footer";
+  }
+  
+  .list-section {
+    /* YOUR CODE: change flex-direction if needed */
+    grid-template-columns: 1fr;
+  }
+  
+  .list-item {
+    /* YOUR CODE: full width on mobile */
+    width: 100%;
+  }
+}
+
+/* ===========================================
+   TYPOGRAPHY (provided)
+   =========================================== */
+
+h1 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
