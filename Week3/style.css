@@ -46,7 +46,7 @@ img{
 h1, h2, h3{ line-height: 1.2; margin: 0; }
 p{ margin: 0; }
 
-a{ color: inherit; }
+
 
 
 :focus-visible{
@@ -124,7 +124,7 @@ a{ color: inherit; }
   padding: var(--space-3) var(--space-4);
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 999px; 
+  border-radius: 1rem; 
   display: flex;
   justify-content: space-between;
   gap: var(--space-3);
@@ -190,6 +190,8 @@ a{ color: inherit; }
 }
 
 .instruction-step{
+  display: flex;
+  flex-direction: column;
   padding: var(--space-4);
   border: 1px solid var(--border);
   border-radius: 1rem;
@@ -197,7 +199,7 @@ a{ color: inherit; }
 }
 
 .instruction-step strong{
-  display: inline-block;
+  display: flex;
   margin-bottom: var(--space-2);
   color: color-mix(in srgb, var(--accent) 70%, var(--text));
 }
@@ -223,6 +225,7 @@ a{ color: inherit; }
       "ingredients instructions"
       "footer footer";
   }
+
 
   .recipe-header{
     grid-template-columns: 1.1fr 0.9fr;
