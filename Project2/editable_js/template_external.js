@@ -20,7 +20,7 @@ function showTable(data) {
       return;
     }
 
-    // 清掉舊地圖，避免重複初始化錯誤
+    
     if (mapElement._leaflet_id) {
       mapElement._leaflet_id = null;
     }
