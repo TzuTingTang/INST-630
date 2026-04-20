@@ -1,0 +1,27 @@
+body {
+  font-family: sans-serif;
+  background: #f5f7fb;
+  padding: 40px;
+}
+
+.app {
+  max-width: 600px;
+  margin: auto;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background: black;
+  color: white;
+  cursor: pointer;
+}
+
+pre {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
