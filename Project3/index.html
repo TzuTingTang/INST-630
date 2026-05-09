@@ -3,18 +3,205 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AudioTerra Prototype</title>
+  <title>AudioTerra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.js"></script>
 </head>
 <body>
   <main class="app">
-    <h1>AudioTerra Demo</h1>
 
-    <select id="countrySelect"></select>
-    <button id="playBtn">Play Sound</button>
+    <header class="site-header">
+      <div class="header-meta">
+        <span class="notation" aria-hidden="true">{00}</span>
+        <span class="header-year">2024</span>
+      </div>
+      <div class="header-title">
+        <h1>AudioTerra</h1>
+        <p class="header-sub">World Happiness Report — Data Sonification</p>
+      </div>
+    </header>
 
-    <pre id="output"></pre>
+    <nav class="view-nav" role="tablist" aria-label="Views">
+      <button class="view-tab active" data-view="map" role="tab" aria-selected="true" aria-controls="view-map">
+        <span class="notation" aria-hidden="true">{01}</span> Map
+      </button>
+      <button class="view-tab" data-view="playground" role="tab" aria-selected="false" aria-controls="view-playground">
+        <span class="notation" aria-hidden="true">{02}</span> Playground
+      </button>
+    </nav>
+
+    <!-- map view -->
+    <div class="view" id="view-map">
+
+      <section class="section-map">
+        <div class="section-label">
+          <span class="section-name">Global Map</span>
+          <span class="section-desc">Click any country to hear its happiness profile</span>
+        </div>
+        <div id="map" role="application" aria-label="Interactive world map — click a country to sonify its data"></div>
+      </section>
+
+      <section class="section-controls">
+        <div class="controls-row">
+          <div class="select-wrap">
+            <label class="select-label" for="countrySelect">Country</label>
+            <select id="countrySelect">
+              <option value="" disabled selected>— select —</option>
+            </select>
+          </div>
+          <div class="btn-group">
+            <button id="playBtn" class="btn-play">▶ Play</button>
+            <button id="stopBtn" class="btn-stop">■ Stop</button>
+          </div>
+          <div id="status" class="status" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="section-viz">
+        <div class="viz-grid">
+          <div class="viz-panel">
+            <div class="viz-label">
+              <span class="notation" aria-hidden="true">Fig. 01</span>
+              <span class="viz-title">Happiness Index</span>
+            </div>
+            <div class="radar-wrap">
+              <canvas id="radarChart" role="img" aria-label="Radar chart of selected country's happiness dimensions"></canvas>
+            </div>
+            <p class="viz-hint" id="radarHint">Select a country to render profile</p>
+          </div>
+          <div class="viz-panel">
+            <div class="viz-label">
+              <span class="notation" aria-hidden="true">Fig. 02</span>
+              <span class="viz-title">Sound Mapping</span>
+            </div>
+            <div id="bars"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-legend">
+        <div class="section-label">
+          <span class="notation" aria-hidden="true">{03}</span>
+          <span class="section-name">Methodology</span>
+        </div>
+        <ul class="legend-list">
+          <li><span class="leg-key">Happiness</span><span class="leg-arrow">→</span><span class="leg-val">Chord Voicing — diminished · minor · major · open fifth</span></li>
+          <li><span class="leg-key">GDP</span><span class="leg-arrow">→</span><span class="leg-val">Tempo — 60 to 138 BPM</span></li>
+          <li><span class="leg-key">Health</span><span class="leg-arrow">→</span><span class="leg-val">Octave Register — low (−1 oct) · mid · high (+1 oct)</span></li>
+          <li><span class="leg-key">Freedom</span><span class="leg-arrow">→</span><span class="leg-val">Stereo Panning — still to wide sweep (0.3 → 2.3 Hz)</span></li>
+          <li><span class="leg-key">Generosity</span><span class="leg-arrow">→</span><span class="leg-val">Rhythm Density — sparse (2/8 beats) to full (8/8)</span></li>
+          <li><span class="leg-key">Integrity</span><span class="leg-arrow">→</span><span class="leg-val">Tremolo — steady (clean) to rapid flutter (corrupt)</span></li>
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- playground view -->
+    <div class="view" id="view-playground" hidden>
+
+      <section class="section-playground">
+        <div class="pg-grid">
+
+          <div class="pg-panel">
+            <div class="viz-label">
+              <span class="notation" aria-hidden="true">Fig. 03</span>
+              <span class="viz-title">Parameter Sliders</span>
+            </div>
+
+            <div class="slider-list">
+
+              <div class="slider-item">
+                <div class="slider-header">
+                  <label class="slider-name" for="sl-ladder">Happiness</label>
+                  <span class="slider-val" id="sv-ladder">0.50</span>
+                </div>
+                <input type="range" id="sl-ladder" min="0" max="1" step="0.01" value="0.5" />
+              </div>
+
+              <div class="slider-item">
+                <div class="slider-header">
+                  <label class="slider-name" for="sl-gdp">GDP</label>
+                  <span class="slider-val" id="sv-gdp">0.50</span>
+                </div>
+                <input type="range" id="sl-gdp" min="0" max="1" step="0.01" value="0.5" />
+              </div>
+
+              <div class="slider-item">
+                <div class="slider-header">
+                  <label class="slider-name" for="sl-health">Health</label>
+                  <span class="slider-val" id="sv-health">0.50</span>
+                </div>
+                <input type="range" id="sl-health" min="0" max="1" step="0.01" value="0.5" />
+              </div>
+
+              <div class="slider-item">
+                <div class="slider-header">
+                  <label class="slider-name" for="sl-freedom">Freedom</label>
+                  <span class="slider-val" id="sv-freedom">0.50</span>
+                </div>
+                <input type="range" id="sl-freedom" min="0" max="1" step="0.01" value="0.5" />
+              </div>
+
+              <div class="slider-item">
+                <div class="slider-header">
+                  <label class="slider-name" for="sl-generosity">Generosity</label>
+                  <span class="slider-val" id="sv-generosity">0.50</span>
+                </div>
+                <input type="range" id="sl-generosity" min="0" max="1" step="0.01" value="0.5" />
+              </div>
+
+              <div class="slider-item">
+                <div class="slider-header">
+                  <label class="slider-name" for="sl-corruption">Integrity</label>
+                  <span class="slider-val" id="sv-corruption">0.50</span>
+                </div>
+                <input type="range" id="sl-corruption" min="0" max="1" step="0.01" value="0.5" />
+              </div>
+
+            </div>
+
+            <div class="pg-controls">
+              <button id="pgPlayBtn" class="btn-play">▶ Play</button>
+              <button id="pgStopBtn" class="btn-stop">■ Stop</button>
+              <div id="pgStatus" class="status" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="pg-panel pg-match">
+            <div class="viz-label">
+              <span class="notation" aria-hidden="true">Fig. 04</span>
+              <span class="viz-title">Profile</span>
+            </div>
+
+            <div class="pg-radar-wrap">
+              <canvas id="pgRadarChart" role="img" aria-label="Radar chart of current slider values"></canvas>
+            </div>
+
+            <div class="match-card">
+              <p class="match-label">Closest country</p>
+              <div class="match-country" id="pgCountryName">—</div>
+              <table class="match-stats" id="pgStats">
+                <tr><td class="stat-k">Happiness</td><td class="stat-v" id="pg-ladder">—</td></tr>
+                <tr><td class="stat-k">GDP</td><td class="stat-v" id="pg-gdp">—</td></tr>
+                <tr><td class="stat-k">Health</td><td class="stat-v" id="pg-health">—</td></tr>
+                <tr><td class="stat-k">Freedom</td><td class="stat-v" id="pg-freedom">—</td></tr>
+                <tr><td class="stat-k">Generosity</td><td class="stat-v" id="pg-generosity">—</td></tr>
+                <tr><td class="stat-k">Integrity</td><td class="stat-v" id="pg-corruption">—</td></tr>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
   </main>
 
   <script src="script.js"></script>

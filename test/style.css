@@ -1,23 +1,21 @@
-/* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── Tokens ── */
+/* colors + typography */
 :root {
-  --bg:          #F0EBE0;
-  --bg-subtle:   #E8E1D4;
-  --bg-sunken:   #DED6C6;
-  --ink:         #1C1814;
-  --ink-muted:   #4E4840;   /* was #7A7066 — 5.8:1 contrast */
-  --ink-faint:   #6B6055;   /* was #B0A898 — 4.6:1 contrast */
-  --rule:        #B8AFA0;   /* slightly darker for visible borders */
-  --accent:      #B84B28;   /* terracotta */
-  --positive:    #3D6B4A;   /* sage green, darkened for 4.5:1 */
+  --bg:        #F0EBE0;
+  --bg-subtle: #E8E1D4;
+  --bg-sunken: #DED6C6;
+  --ink:       #1C1814;
+  --ink-muted: #4E4840;
+  --ink-faint: #6B6055;
+  --rule:      #B8AFA0;
+  --accent:    #B84B28;
+  --positive:  #3D6B4A;
 
-  --font-sans:   'Space Grotesk', system-ui, sans-serif;
-  --font-mono:   'Space Mono', 'Courier New', monospace;
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
 }
 
-/* ── Base ── */
 body {
   font-family: var(--font-sans);
   background: var(--bg);
@@ -28,7 +26,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── App shell ── */
 .app {
   max-width: 1080px;
   margin: 0 auto;
@@ -38,7 +35,6 @@ body {
   gap: 0;
 }
 
-/* ── Notation / label atoms ── */
 .notation {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -47,7 +43,7 @@ body {
   user-select: none;
 }
 
-/* ── Header ── */
+/* header */
 .site-header {
   display: flex;
   flex-direction: column;
@@ -85,7 +81,6 @@ h1 {
   margin-top: 6px;
 }
 
-/* ── Section label row ── */
 .section-label {
   display: flex;
   align-items: baseline;
@@ -107,10 +102,8 @@ h1 {
   margin-left: auto;
 }
 
-/* ── Map section ── */
-.section-map {
-  margin-bottom: 32px;
-}
+/* map */
+.section-map { margin-bottom: 32px; }
 
 #map {
   width: 100%;
@@ -118,7 +111,7 @@ h1 {
   background: var(--bg-subtle);
 }
 
-/* Override Leaflet defaults for light theme */
+/* leaflet overrides — needs !important to beat leaflet's inline styles */
 .leaflet-container { background: #E4DDD0 !important; outline: none !important; }
 #map:focus, #map:focus-visible { outline: none; }
 .leaflet-interactive:focus { outline: none; }
@@ -146,7 +139,7 @@ h1 {
 }
 .leaflet-tooltip.map-tooltip::before { display: none; }
 
-/* ── Controls ── */
+/* controls bar */
 .section-controls {
   padding: 20px 0;
   border-top: 1px solid var(--rule);
@@ -247,7 +240,7 @@ button:focus-visible {
   50%       { opacity: 0.4; }
 }
 
-/* ── Viz grid ── */
+/* viz panels */
 .section-viz { margin-bottom: 48px; }
 
 .viz-grid {
@@ -257,13 +250,8 @@ button:focus-visible {
   border-bottom: 1px solid var(--rule);
 }
 
-.viz-panel {
-  padding: 28px;
-}
-
-.viz-panel + .viz-panel {
-  border-left: 1px solid var(--rule);
-}
+.viz-panel { padding: 28px; }
+.viz-panel + .viz-panel { border-left: 1px solid var(--rule); }
 
 .viz-label {
   display: flex;
@@ -280,7 +268,6 @@ button:focus-visible {
   color: var(--ink-muted);
 }
 
-/* ── Radar chart ── */
 .radar-wrap {
   position: relative;
   width: 100%;
@@ -296,7 +283,7 @@ button:focus-visible {
   text-align: center;
 }
 
-/* ── Sound Profile bars ── */
+/* sound mapping bars */
 #bars {
   display: flex;
   flex-direction: column;
@@ -313,7 +300,6 @@ button:focus-visible {
 }
 
 .bar-row:last-child { border-bottom: none; }
-
 .bar-label { display: flex; flex-direction: column; gap: 1px; }
 
 .dim-name {
@@ -348,7 +334,7 @@ button:focus-visible {
   white-space: nowrap;
 }
 
-/* ── Legend ── */
+/* legend */
 .section-legend {
   padding-top: 32px;
   border-top: 1px solid var(--rule);
@@ -357,16 +343,12 @@ button:focus-visible {
 .legend-list {
   list-style: none;
   margin-top: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
 }
 
 .legend-list li {
   display: grid;
   grid-template-columns: 90px 20px 1fr;
   align-items: baseline;
-  gap: 0;
   padding: 9px 0;
   border-bottom: 1px solid var(--bg-subtle);
   font-size: 13px;
@@ -374,26 +356,13 @@ button:focus-visible {
 
 .legend-list li:last-child { border-bottom: none; }
 
-.leg-key {
-  font-weight: 500;
-  color: var(--ink);
-}
+.leg-key { font-weight: 500; color: var(--ink); }
+.leg-arrow { font-family: var(--font-mono); color: var(--ink-faint); font-size: 12px; }
+.leg-val { color: var(--ink-muted); font-size: 13px; }
 
-.leg-arrow {
-  font-family: var(--font-mono);
-  color: var(--ink-faint);
-  font-size: 12px;
-}
-
-.leg-val {
-  color: var(--ink-muted);
-  font-size: 13px;
-}
-
-/* ── View tabs ── */
+/* tabs */
 .view-nav {
   display: flex;
-  gap: 0;
   border-bottom: 1px solid var(--rule);
   margin-bottom: 40px;
 }
@@ -416,21 +385,13 @@ button:focus-visible {
   transition: color 0.15s;
 }
 
-.view-tab:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: -2px;
-}
-
 .view-tab:hover { color: var(--ink-muted); }
-
-.view-tab.active {
-  color: var(--ink);
-  border-bottom-color: var(--ink);
-}
+.view-tab:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.view-tab.active { color: var(--ink); border-bottom-color: var(--ink); }
 
 .view[hidden] { display: none !important; }
 
-/* ── Playground ── */
+/* playground */
 .section-playground { padding-top: 0; }
 
 .pg-grid {
@@ -446,11 +407,9 @@ button:focus-visible {
   padding: 28px;
 }
 
-/* Sliders */
 .slider-list {
   display: flex;
   flex-direction: column;
-  gap: 0;
   margin-bottom: 32px;
 }
 
@@ -482,7 +441,7 @@ button:focus-visible {
   text-align: right;
 }
 
-/* Custom range input */
+/* custom range styling */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -511,7 +470,7 @@ input[type="range"]::-webkit-slider-thumb {
   transition: transform 0.1s;
 }
 
-input[type="range"]::-webkit-slider-thumb:hover  { transform: scale(1.2); }
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 input[type="range"]:focus-visible::-webkit-slider-thumb {
   box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--ink);
 }
@@ -525,7 +484,6 @@ input[type="range"]::-moz-range-thumb {
   border: none;
 }
 
-/* Playground controls */
 .pg-controls {
   display: flex;
   align-items: center;
@@ -533,7 +491,6 @@ input[type="range"]::-moz-range-thumb {
   padding-top: 4px;
 }
 
-/* Match panel */
 .pg-match { display: flex; flex-direction: column; }
 
 .pg-radar-wrap {
@@ -543,10 +500,7 @@ input[type="range"]::-moz-range-thumb {
   margin-bottom: 8px;
 }
 
-/* Match card */
-.match-card {
-  padding: 20px 0 0;
-}
+.match-card { padding: 20px 0 0; }
 
 .match-label {
   font-family: var(--font-mono);
@@ -565,40 +519,35 @@ input[type="range"]::-moz-range-thumb {
   margin-bottom: 16px;
 }
 
-.match-stats {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.match-stats tr {
-  border-bottom: 1px solid var(--bg-subtle);
-}
-
+.match-stats { width: 100%; border-collapse: collapse; }
+.match-stats tr { border-bottom: 1px solid var(--bg-subtle); }
 .match-stats tr:last-child { border-bottom: none; }
 
-.stat-k, .stat-v {
-  padding: 7px 0;
-  font-size: 13px;
-}
+.stat-k, .stat-v { padding: 7px 0; font-size: 13px; }
+.stat-k { color: var(--ink-muted); width: 50%; }
+.stat-v { font-family: var(--font-mono); font-size: 12px; color: var(--ink); text-align: right; }
 
-.stat-k {
-  color: var(--ink-muted);
-  width: 50%;
-}
-
-.stat-v {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--ink);
-  text-align: right;
-}
-
-/* ── Responsive ── */
 @media (max-width: 680px) {
   .app { padding: 32px 20px 60px; }
-  .viz-grid { grid-template-columns: 1fr; }
-  .pg-grid { grid-template-columns: 1fr; }
   h1 { font-size: 40px; }
   .section-desc { display: none; }
-  #map { height: 320px; }
+  #map { height: 300px; }
+
+  .viz-grid { grid-template-columns: 1fr; }
+  .viz-panel + .viz-panel { border-left: none; border-top: 1px solid var(--rule); }
+
+  .pg-grid { grid-template-columns: 1fr; }
+
+  /* simplify the bar rows on small screens */
+  .bar-row { grid-template-columns: 1fr auto; gap: 8px; }
+  .bar-track { display: none; }
+  .dim-maps { display: none; }
+  .bar-detail { white-space: normal; }
+
+  .controls-row { flex-direction: column; align-items: stretch; gap: 12px; }
+  .select-wrap { min-width: 0; }
+
+  button { padding: 12px 20px; }
+  input[type="range"]::-webkit-slider-thumb { width: 20px; height: 20px; }
+  input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; }
 }

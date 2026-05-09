@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Project3",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3333", "--directory", "Project3"],
+      "port": 3333
+    }
+  ]
+}
